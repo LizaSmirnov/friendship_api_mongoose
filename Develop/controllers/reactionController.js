@@ -1,14 +1,14 @@
-const { ObjectId } = require('moongose').Types;
-const {User, Thoughts, Reactions, Reaction } = require('../models');
+const { ObjectId } = require('mongoose').Types;
+const {User, Thought, Reaction } = require('../models');
 
 
 module.exports = {
 //get all thoughts
 async getReactions(req, res){
 try {
-    const reactions = await Reactions.find();
+    const reaction = await Reaction.find();
     const reactionObj = {
-        reactions,
+        reaction,
     };
     return res.json(reactionObj);
 } catch (err) {
@@ -44,49 +44,49 @@ async createReaction(req, res){
     }
 },
 
-async deleteReaction(req, res){
-    try {
-        const reaction = await Reaction.findOneAndRemove({ _id: req.params.userId});
+// async deleteReaction(req, res){
+//     try {
+//         const reaction = await Reaction.findOneAndRemove({ _id: req.params.userId});
 
-        if(!reaction){
-            return res(404).json({ message: 'no reaction stone cold...'})
-        }
-        const reaction = await Reaction.findOneAndUpdate(
-            {thoughts : req.params.thoughtId},
-            {$pull: { users: req.params.thoughtId } },
-            { new: true }
-          );
+//         if(!reaction){
+//             return res(404).json({ message: 'no reaction stone cold...'})
+//         }
+//         const reaction = await Reaction.findOneAndUpdate(
+//             {thoughts : req.params.thoughtId},
+//             {$pull: { users: req.params.thoughtId } },
+//             { new: true }
+//           );
     
-          if (!reaction) {
-            return res.status(404).json({
-              message: 'Thought deleted, but no reactions found',
-            });
-          }
+//           if (!reaction) {
+//             return res.status(404).json({
+//               message: 'Thought deleted, but no reactions found',
+//             });
+//           }
     
-          res.json({ message: 'Reactions no more' });
-        } catch (err) {
-          console.log(err);
-          res.status(500).json(err);
-        }
-    },
+//           res.json({ message: 'Reactions no more' });
+//         } catch (err) {
+//           console.log(err);
+//           res.status(500).json(err);
+//         }
+//     },
   // Add an thought to a user
   async addReaction(req, res) {
     try {
       console.log('You are adding a reaction');
       console.log(req.body);
-      const thought = await Thoought.findOneAndUpdate(
+      const thought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
         { $addToSet: { reactions: req.body } },
         { runValidators: true, new: true }
       );
 
-      if (!thoughts) {
+      if (!thought) {
         return res
           .status(404)
           .json({ message: 'No thoughts found with that ID :(' })
       }
 
-      res.json(thoughts);
+      res.json(thought);
     } catch (err) {
       res.status(500).json(err);
     }

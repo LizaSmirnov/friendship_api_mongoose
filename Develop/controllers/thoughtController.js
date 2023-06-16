@@ -1,14 +1,14 @@
 const { ObjectId } = require('moongose').Types;
-const {User, Thoughts, Reactions } = require('../models');
+const {User, Thought, Reaction } = require('../models');
 
 
 module.exports = {
 //get all thoughts
 async getThoughts(req, res){
 try {
-    const thoughts = await Thoughts.find();
+    const thought = await Thought.find();
     const thoughtObj = {
-        thoughts,
+        thought,
     };
     return res.json(thoughtObj);
 } catch (err) {

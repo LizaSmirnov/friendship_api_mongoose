@@ -1,7 +1,7 @@
-const { schema, model } = require('mongoose');
-const thoughtSchema = require('./Thought');
+const { Schema, model } = require('mongoose');
+const { thoughtSchema } = require('./Thought');
 
-const userSchema = new schema(
+const userSchema = new Schema(
     {
         username: {
             type: String,
@@ -23,8 +23,6 @@ const userSchema = new schema(
         },
 
         thoughts: [thoughtSchema],
-    },
-    {
         friends: [
             {
                 type: Schema.Types.ObjectId,
@@ -39,6 +37,6 @@ const userSchema = new schema(
     }
 );
 
-const Student = model('User', userSchema);
+const User = model('User', userSchema);
 
 module.exports = User;

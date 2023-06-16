@@ -1,30 +1,37 @@
 const connection = require('../config/connection');
-const { User, Thoughts, Reaction } = require('../models');
+const { User, Thought, Reaction } = require('../models');
 
 connection.once('open', async () => {
-    console.log('connected to database');
-    await User.deleteMany({});
-    await Thoughts.deleteMany({});
-    await Reaction.deleteMany({});
+  console.log('connected to database');
+  await User.deleteMany({});
+  await Thought.deleteMany({});
+  await Reaction.deleteMany({});
 
-    const user = [];
+  const users = [];
 
-    for (let i = 0; i < 10; i++) {
-        const thoughts = await Thoughts.create({
-            thoughtText: faker.lorem.words(Math.round(Math.random() * 20) + 1),
-            username: faker.internet.userName(),
-        });
+  for (let i = 0; i < 10; i++) {
+    const user = await User.create({
+      email: 'jacob@mail.com', // Provide a valid email address
+      username: 'plate', // Provide a username
+    });
 
-        const reaction = await Reaction.create({
-            reactionBody: faker.lorem.words(Math.round(Math.random() * 20) + 1),
-            username: faker.internet.userName(),
-            
-        });
-        user.push({ thoughts: thoughts._id, reaction: reaction._id });
-    }    
-    
-    await User.create(user);
-    console.log('all done!');
-    process.exit(0);
-    
+    const thought = await Thought.create({
+      thoughtText: 'stuff',
+      username: 'plate', // Provide a username
+      email: 'jacob@mail.com',
+    });
+
+    const reaction = await Reaction.create({
+      reactionBody: 'thats cool',
+      username: 'username',
+    });
+
+    users.push(user._id);
+  }
+
+  await Thought.updateMany({}, { user: users });
+  await Reaction.updateMany({}, { user: users });
+
+  console.log('all done!');
+  process.exit(0);
 });
