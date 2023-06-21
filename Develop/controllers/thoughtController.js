@@ -1,10 +1,10 @@
-const { ObjectId } = require('moongose').Types;
+const { ObjectId } = require('mongoose').Types;
 const {User, Thought, Reaction } = require('../models');
 
 
 module.exports = {
 //get all thoughts
-async getThoughts(req, res){
+async getThought(req, res){
 try {
     const thought = await Thought.find();
     const thoughtObj = {
@@ -70,13 +70,13 @@ async deleteThought(req, res){
         }
     },
   // Add an thought to a user
-  async addThought(req, res) {
+  async updateThought(req, res) {
     try {
       console.log('You are adding a thought');
       console.log(req.body);
       const user = await User.findOneAndUpdate(
         { _id: req.params.userId },
-        { $addToSet: { thoughts: req.body } },
+        { $addToSet: { thought: req.body } },
         { runValidators: true, new: true }
       );
 

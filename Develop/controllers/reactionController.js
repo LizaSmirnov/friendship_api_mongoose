@@ -20,7 +20,7 @@ try {
 async getSingleReaction(req, res){
     try{
         const reaction = await Reaction.findByOne({_id: req.params.studentId})
-        .select('-__V')
+        .select('-__V')//verisonKey key value contains the internal revision of the document(renameable)
         .lean();
 
         if(!reaction){
