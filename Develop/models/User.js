@@ -8,7 +8,6 @@ const userSchema = new Schema(
             unique: true,
             required: true,
             trim: true,
-            max_length:20,
         },
         email: {
             type: String,
@@ -22,18 +21,27 @@ const userSchema = new Schema(
         }
         },
 
-        thoughts: [thoughtSchema],
+        thoughts: [{
+            type:Schema.Types.ObjectId,
+            ref: 'Thought',
+        }],
         friends: [
             {
                 type: Schema.Types.ObjectId,
                 ref: 'User',
             },
         ],
+        friendCount: {  
+            type: Number,
+            default: 0,
+        },
+
     },
     {
         toJSON: {
-            getters:true
+            virtuals:true
         },
+         id: false,
     }
 );
 

@@ -20,7 +20,7 @@ try {
 //get single thought
 async getSingleThought(req, res){
     try{
-        const thought = await Thought.findByOne({_id: req.params.studentId})
+        const thought = await Thought.findOne({_id: req.params.id})
         .populate('reactions')
         .select('-__v');
 
