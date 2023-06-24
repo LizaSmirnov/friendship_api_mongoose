@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongoose').Types; //default mongoose uses objs as ids as default
-const { User, Thought, Reaction } = require('../models');
+const { User } = require('../models');
+const { Thought } = require('../models');
 
 module.exports = {
 
@@ -18,18 +19,16 @@ module.exports = {
 
     async getUserById(req, res){
         try {
-            const user = await User.findOne({_id: req.params.userId })
-            .select('-__v')
-            .lean();
-
+            const user = await User.findOne({_id: req.params.id })
+            .select('-__v')//used to excluded the __v field from the returned user obj
+            // .lean()//methos is used to convert the retrieved user obj in plain js; optional better for improving performance
+            .populate[('friends','thought')];
+            console.log(user);
             if(!user){
                 return res.status(404).json({ message: 'No user found with this id!' });
             }
+            res.json(user);
 
-            res.json({
-                user,
-                thought: await thought(req.params.userId),
-            });
         } catch (err) {
             console.log(err);
             return res.status(404).json(err);

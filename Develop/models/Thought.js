@@ -1,6 +1,7 @@
 const {Schema, model} = require('mongoose');
 const { reactionSchema } = require('./Reaction');
-
+const moment = require('moment');
+const dateFormat = (timestamp) => moment(timestamp).format('LLL');
 const thoughtSchema = new Schema(
     {
         thoughtText: {
@@ -19,6 +20,10 @@ const thoughtSchema = new Schema(
             required: true,
         },
         reactions: [reactionSchema],
+        reactionCount: {
+            type: Number,
+            default: 0,
+        },
     },
     {
         toJSON: {

@@ -47,7 +47,7 @@ connection.once('open', async () => {
       username: 'username',
     });
 
-    users.push(user._id);
+    // users.push(user._id);
   }
 
   // await Thought.updateMany({}, { user: users });
