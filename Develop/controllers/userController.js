@@ -17,7 +17,7 @@ module.exports = {
 
     async getUserById(req, res){
         try {
-            const users = await User.findOne({ _id: req.params.Id})
+            const users = await User.findOne({ _id: req.params.id})
             .select('-__v')//used to excluded the __v field from the returned user obj
             // .lean()//methos is used to convert the retrieved user obj in plain js; optional better for improving performance
             .populate('friends')
