@@ -14,7 +14,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
-    "faker": "^6.6.6",
     "moment": "^2.29.4",
     "mongod": "^2.0.0",
     "mongoose": "^7.2.3",
