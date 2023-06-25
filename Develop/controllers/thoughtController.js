@@ -21,8 +21,8 @@ try {
 async getSingleThought(req, res){
     try{
         const thought = await Thought.findOne({_id: req.params.id})
-        .populate('reactions')
-        .select('-__v');
+        .select('-__v')
+        .populate('reactions');
 
         if(!thought){
             return res.status(404).json({message: "no thought found by that id yoo..."})
@@ -56,29 +56,17 @@ async createThought(req, res){
 //delete your thoughhtttt        
 async deleteThought(req, res){
     try {
-        const thought = await Thought.findOneAndRemove({ _id: req.params.userId});
-
+        const thought = await Thought.findOneAndRemove({ _id: req.params.idd});
         if(!thought){
-            return res(404).json({ message: 'no thoughts found rip'})
+            return res.status(404).json({ message: 'No thought found with this id!' });
         }
-        const reaction = await Reaction.findOneAndUpdate(
-            {users : req.params.userId},
-            {$pull: { users: req.params.userId } },
-            { new: true }
-          );
-    
-          if (!reaction) {
-            return res.status(404).json({
-              message: 'Thought deleted, but no reactions found',
-            });
-          }
-    
-          res.json({ message: 'Thoughts be gone' });
-        } catch (err) {
-          console.log(err);
-          res.status(500).json(err);
-        }
+        res.json(thought);
+      } catch (err) {
+        console.log(err);
+        return res.status(404).json(err);
+      }
     },
+    
   // Add an thought to a user
   async updateThought(req, res) {
     try {
