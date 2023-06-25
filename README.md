@@ -17,7 +17,7 @@
 ## Description
 Hello, this app is used with mongod and express mainly to create the backend api for a social media site. Users can be create, share thoughts and reactions. All users and thoughts can also be updated or removed as well. With reactions we are able to add and remove them. 
 ## Video
-
+https://drive.google.com/file/d/1on2swEL-OHaWFizqwHZrM-0WA4SA9f8J/view?usp=sharing
 
 ## Installation
 Hard Way:Please download the following on your command line "npm i". Please enter into your code editor and make sure all npm packages are installed by checking your package.json file. Once you have installed the correct packages please make sure mongod is installed on your computer and run "mongod" in the terminal. 
